@@ -52,6 +52,10 @@ func (m *NullMessage) SetData(v string) {
 func (m *NullMessage) SetStatus(status string) {
 }
 
+func (t *NullTransaction) AddChild(m Messager) {
+	return
+}
+
 func (t *NullTransaction) GetChildren() []Messager {
 	return []Messager{}
 }

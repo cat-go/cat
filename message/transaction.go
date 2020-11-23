@@ -16,6 +16,8 @@ type Transactor interface {
 	SetDurationStart(time time.Time)
 	NewEvent(mtype, name string) Messager
 	LogEvent(mtype, name string, args ...string)
+	AddChild(m Messager)
+	GetChildren() []Messager
 }
 
 type Transaction struct {
