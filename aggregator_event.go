@@ -8,7 +8,7 @@ import (
 )
 
 type eventData struct {
-	mtype, name string
+	mType, name string
 
 	count, fail int
 }
@@ -39,7 +39,7 @@ func (p *eventAggregator) send(dataMap map[string]*eventData) {
 	defer t.Complete()
 
 	for _, data := range dataMap {
-		event := t.NewEvent(data.mtype, data.name)
+		event := t.NewEvent(data.mType, data.name)
 		event.SetData(fmt.Sprintf("%c%d%c%d", batchFlag, data.count, batchSplit, data.fail))
 	}
 }
@@ -51,7 +51,7 @@ func (p *eventAggregator) getOrDefault(event *message.Event) *eventData {
 		return data
 	} else {
 		p.dataMap[key] = &eventData{
-			mtype: event.Type,
+			mType: event.Type,
 			name:  event.Name,
 			count: 0,
 			fail:  0,

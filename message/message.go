@@ -28,12 +28,19 @@ type Messager interface {
 	SetStatus(status string)
 	SetTime(time time.Time)
 	Complete()
+	GetRootMessageId() string
+	GetParentMessageId() string
+	GetMessageId() string
 }
 
 type Message struct {
 	Type   string
 	Name   string
 	Status string
+
+	rootMessageId   string
+	parentMessageId string
+	messageId       string
 
 	timestamp time.Time
 
@@ -107,4 +114,16 @@ func (m *Message) SetStatus(status string) {
 
 func (m *Message) SetSuccessStatus() {
 	m.Status = CatSuccess
+}
+
+func (m *Message) GetRootMessageId() string {
+	return m.rootMessageId
+}
+
+func (m *Message) GetParentMessageId() string {
+	return m.parentMessageId
+}
+
+func (m *Message) GetMessageId() string {
+	return m.messageId
 }

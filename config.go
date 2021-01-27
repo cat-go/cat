@@ -2,7 +2,6 @@ package cat
 
 import (
 	"encoding/xml"
-	"io/ioutil"
 	"net"
 	"os"
 	"strings"
@@ -46,51 +45,6 @@ var config = Config{
 	httpServerAddresses: []serverAddress{},
 
 	serverAddress: []serverAddress{},
-}
-
-func loadConfigFromLocalFile(filename string) (data []byte, err error) {
-	file, err := os.Open(filename)
-	if err != nil {
-		logger.Warning("Unable to open file `%s`.", filename)
-		return
-	}
-	defer func() {
-		if err := file.Close(); err != nil {
-			logger.Warning("Cannot close local client.xml file.")
-		}
-	}()
-
-	data, err = ioutil.ReadAll(file)
-	if err != nil {
-		logger.Warning("Unable to read content from file `%s`", filename)
-	}
-	return
-}
-
-func loadConfig() (data []byte, err error) {
-	if data, err = loadConfigFromLocalFile(defaultXmlFile); err != nil {
-		logger.Error("Failed to load local config file.")
-		return
-	}
-	return
-}
-
-func parseXMLConfig(data []byte) (err error) {
-	c := XMLConfig{}
-	err = xml.Unmarshal(data, &c)
-	if err != nil {
-		logger.Warning("Failed to parse xml content")
-	}
-
-	for _, x := range c.Servers.Servers {
-		config.httpServerAddresses = append(config.httpServerAddresses, serverAddress{
-			host: x.Host,
-			port: x.Port,
-		})
-	}
-
-	logger.Info("Server addresses: %s", config.httpServerAddresses)
-	return
 }
 
 func (config *Config) Init(opts *Options) (err error) {
@@ -137,18 +91,6 @@ func (config *Config) Init(opts *Options) (err error) {
 			port: opts.Port,
 		})
 	}
-
-	/*var data []byte
-	if data, err = loadConfig(); err != nil {
-		return
-	}
-
-	// Print config content to log file.
-	logger.Info("\n%s", data)
-
-	if err = parseXMLConfig(data); err != nil {
-		return
-	}*/
 
 	return
 }

@@ -9,7 +9,7 @@ import (
 )
 
 type transactionData struct {
-	mtype, name string
+	mType, name string
 
 	count, fail int
 
@@ -71,7 +71,7 @@ func (p *transactionAggregator) send(dataMap map[string]*transactionData) {
 	defer t.Complete()
 
 	for _, data := range dataMap {
-		trans := message.NewTransaction(data.mtype, data.name, nil)
+		trans := message.NewTransaction(data.mType, data.name, nil)
 		trans.SetData(encodeTransactionData(data).String())
 		trans.Complete()
 		t.AddChild(trans)
@@ -85,7 +85,7 @@ func (p *transactionAggregator) getOrDefault(transaction *message.Transaction) *
 		return data
 	} else {
 		p.dataMap[key] = &transactionData{
-			mtype:     transaction.GetType(),
+			mType:     transaction.GetType(),
 			name:      transaction.GetName(),
 			count:     0,
 			fail:      0,

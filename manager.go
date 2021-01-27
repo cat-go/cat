@@ -84,3 +84,13 @@ var manager = catMessageManager{
 	offset: 0,
 	hour:   0,
 }
+
+func MessageId() string {
+	return manager.nextId()
+}
+
+func SetChildTraceId(tran message.Transactor, sub message.Transactor) {
+	sub.SetRootMessageId(tran.GetRootMessageId())
+	sub.SetParentMessageId(tran.GetMessageId())
+	sub.SetMessageId(MessageId())
+}

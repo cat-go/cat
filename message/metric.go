@@ -10,8 +10,8 @@ func (e *Metric) Complete() {
 	}
 }
 
-func NewMetric(mtype, name string, flush Flush) *Metric {
+func NewMetric(mType, name string, flush Flush) *Metric {
 	return &Metric{
-		Message: NewMessage(mtype, name, flush),
+		Message: NewMessage(mType, name, flush),
 	}
 }

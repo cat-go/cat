@@ -15,7 +15,12 @@ var wg = sync.WaitGroup{}
 
 func init() {
 	cat.DebugOn()
-	cat.Init("gocat.v2")
+	cat.Init(&cat.Options{
+		AppId:      "cat-v2",
+		Port:       2280,
+		HttpPort:   8080,
+		ServerAddr: "127.0.0.1",
+	})
 }
 
 // send transaction

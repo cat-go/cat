@@ -14,10 +14,13 @@ type Transactor interface {
 	TransactionGetter
 	SetDuration(duration time.Duration)
 	SetDurationStart(time time.Time)
-	NewEvent(mtype, name string) Messager
-	LogEvent(mtype, name string, args ...string)
+	NewEvent(mType, name string) Messager
+	LogEvent(mType, name string, args ...string)
 	AddChild(m Messager)
 	GetChildren() []Messager
+	SetRootMessageId(rootMessageId string)
+	SetParentMessageId(parentMessageId string)
+	SetMessageId(messageId string)
 }
 
 type Transaction struct {
@@ -86,9 +89,21 @@ func (t *Transaction) GetChildren() []Messager {
 	return t.children
 }
 
-func NewTransaction(mtype, name string, flush Flush) *Transaction {
+func (t *Transaction) SetRootMessageId(rootMessageId string) {
+	t.rootMessageId = rootMessageId
+}
+
+func (t *Transaction) SetParentMessageId(parentMessageId string) {
+	t.parentMessageId = parentMessageId
+}
+
+func (t *Transaction) SetMessageId(messageId string) {
+	t.messageId = messageId
+}
+
+func NewTransaction(mType, name string, flush Flush) *Transaction {
 	return &Transaction{
-		Message:       NewMessage(mtype, name, flush),
+		Message:       NewMessage(mType, name, flush),
 		children:      make([]Messager, 0),
 		isCompleted:   false,
 		mu:            sync.Mutex{},

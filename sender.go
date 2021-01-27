@@ -9,15 +9,15 @@ import (
 	"github.com/cat-go/cat/message"
 )
 
-func createHeader() *message.Header {
+func createHeader(m message.Messager) *message.Header {
 	return &message.Header{
 		Domain:   config.domain,
 		Hostname: config.hostname,
 		Ip:       config.ip,
 
-		MessageId:       manager.nextId(),
-		ParentMessageId: "",
-		RootMessageId:   "",
+		MessageId:       m.GetRootMessageId(),
+		ParentMessageId: m.GetRootMessageId(),
+		RootMessageId:   m.GetMessageId(),
 	}
 }
 
@@ -42,7 +42,7 @@ func (s *catMessageSender) send(m message.Messager) {
 	var buf = s.buf
 	buf.Reset()
 
-	var header = createHeader()
+	var header = createHeader(m)
 	if err := s.encoder.EncodeHeader(buf, header); err != nil {
 		return
 	}
@@ -113,7 +113,7 @@ func (s *catMessageSender) beforeStop() {
 
 func (s *catMessageSender) process() {
 	if s.conn == nil {
-		s.conn = <- s.chConn
+		s.conn = <-s.chConn
 		logger.Info("Received a new connection: %s", s.conn.RemoteAddr().String())
 		return
 	}

@@ -10,8 +10,8 @@ func (e *Heartbeat) Complete() {
 	}
 }
 
-func NewHeartbeat(mtype, name string, flush Flush) *Heartbeat {
+func NewHeartbeat(mType, name string, flush Flush) *Heartbeat {
 	return &Heartbeat{
-		Message: NewMessage(mtype, name, flush),
+		Message: NewMessage(mType, name, flush),
 	}
 }

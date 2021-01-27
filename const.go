@@ -69,3 +69,22 @@ const (
 	signalEventAggregatorExit
 	signalMetricAggregatorExit
 )
+
+const (
+	RootId   = "X-ROOT-MESSAGE-ID"
+	ParentId = "X-ROOT-PARENT-ID"
+	ChildId  = "X-ROOT-CHILD-ID"
+
+	TypeUrl        = "URL"
+	TypeUrlMethod  = "URL.method"
+	TypeUrlForward = "URL.Forward"
+	TypeRemoteCall = "RemoteCall"
+	TypeUrlClient  = "URL.client"
+	TypeRedis      = "REDIS"
+	TypeRedisCmd   = "REDIS.cmd"
+	TypeSql        = "SQL"
+	TypeSqlOp      = "SQL.op"
+	TypeSqlVal     = "SQL.val"
+	TypeMQ         = "MQ"
+	TypeMQTopic    = "MQ.topic"
+)
