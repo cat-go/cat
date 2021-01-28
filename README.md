@@ -2,6 +2,12 @@
 cat client for golang
 # 背景
 公司使用cat做监控与链路追踪，官方golang的client已经多年不维护了，使用的话还是要自己封装
+#### 变更点
+- 支持了参数选项
+- 支持了mod模式
+- Transaction 增加 AddChild、 GetChildren方法，可组装消息树
+- 增加了MessageId、ParentMessageId、RootMessageId透传
+- 增加gin中间件使用示例：https://github.com/cat-go/gin-Middleware
 # 使用
 ```
 go get github.com/cat-go/cat
