@@ -49,9 +49,9 @@ type Message struct {
 	flush Flush
 }
 
-func NewMessage(mtype, name string, flush Flush) Message {
+func NewMessage(mType, name string, flush Flush) Message {
 	return Message{
-		Type:      mtype,
+		Type:      mType,
 		Name:      name,
 		Status:    CatSuccess,
 		timestamp: time.Now(),

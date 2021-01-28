@@ -15,9 +15,9 @@ func createHeader(m message.Messager) *message.Header {
 		Hostname: config.hostname,
 		Ip:       config.ip,
 
-		MessageId:       m.GetRootMessageId(),
-		ParentMessageId: m.GetRootMessageId(),
-		RootMessageId:   m.GetMessageId(),
+		MessageId:       m.GetMessageId(),
+		ParentMessageId: m.GetParentMessageId(),
+		RootMessageId:   m.GetRootMessageId(),
 	}
 }
 
@@ -44,9 +44,11 @@ func (s *catMessageSender) send(m message.Messager) {
 
 	var header = createHeader(m)
 	if err := s.encoder.EncodeHeader(buf, header); err != nil {
+		logger.Error(err.Error())
 		return
 	}
 	if err := s.encoder.EncodeMessage(buf, m); err != nil {
+		logger.Error(err.Error())
 		return
 	}
 
