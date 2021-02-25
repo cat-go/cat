@@ -10,12 +10,16 @@ import (
 )
 
 func createHeader(m message.Messager) *message.Header {
+	mid := m.GetMessageId()
+	if mid == "" {
+		mid = manager.nextId()
+	}
 	return &message.Header{
 		Domain:   config.domain,
 		Hostname: config.hostname,
 		Ip:       config.ip,
 
-		MessageId:       m.GetMessageId(),
+		MessageId:       mid,
 		ParentMessageId: m.GetParentMessageId(),
 		RootMessageId:   m.GetRootMessageId(),
 	}
