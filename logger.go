@@ -55,11 +55,6 @@ func (l *Logger) switchLogFile(time time.Time) {
 }
 
 func (l *Logger) write(prefix, format string, args ...interface{}) {
-	/*now := time.Now()
-
-	if now.Day() != l.currentDay {
-		l.switchLogFile(now)
-	}*/
 	l.logger.Printf(prefix+" "+format, args...)
 }
 
