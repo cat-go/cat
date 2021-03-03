@@ -1,7 +1,7 @@
 package cat
 
 import (
-	"fmt"
+	"strconv"
 	"sync/atomic"
 	"time"
 
@@ -68,7 +68,8 @@ func (p *catMessageManager) nextId() string {
 
 	if hour != p.hour {
 		p.hour = hour
-		p.messageIdPrefix = fmt.Sprintf("%s-%s-%d", config.domain, config.ipHex, hour)
+		//p.messageIdPrefix = fmt.Sprintf("%s-%s-%d", config.domain, config.ipHex, hour)
+		p.messageIdPrefix = config.domain + config.ipHex +  strconv.Itoa(hour)
 
 		currentIndex := atomic.LoadUint32(&p.index)
 		if atomic.CompareAndSwapUint32(&p.index, currentIndex, 0) {
@@ -76,7 +77,8 @@ func (p *catMessageManager) nextId() string {
 		}
 	}
 
-	return fmt.Sprintf("%s-%d", p.messageIdPrefix, atomic.AddUint32(&p.index, 1))
+	//return fmt.Sprintf("%s-%d", p.messageIdPrefix, atomic.AddUint32(&p.index, 1))
+	return p.messageIdPrefix + strconv.Itoa(int(atomic.AddUint32(&p.index, 1)))
 }
 
 var manager = catMessageManager{
