@@ -21,3 +21,15 @@ func TestHitSample(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func BenchmarkSample(b *testing.B)  {
+	var (
+		sample = -2.0
+		count  = 0
+	)
+	for i := 0; i < b.N; i++ {
+		if manager.hitSample(sample) {
+			count++
+		}
+	}
+}

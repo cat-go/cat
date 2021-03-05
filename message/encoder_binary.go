@@ -32,6 +32,9 @@ func writeI64(buf *bytes.Buffer, i int64) (err error) {
 			}
 			i >>= 7
 		}
+		if i < 0 {      //此处解决i为负数时造成的死循环导致内存泄漏
+			return
+		}
 	}
 }
 
